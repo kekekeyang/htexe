@@ -17,6 +17,13 @@ class RootNCViewController: UINavigationController {
 
         // Do any additional setup after loading the view.
     }
+    public func removeTheLine(color: UIColor) {
+        self.navigationBar.barTintColor =  UIColor.init(red: 28/255, green: 207/255, blue: 201/255, alpha: 1)
+        self.navigationBar.setBackgroundImage(UIImage.init(), for: .any, barMetrics: .default)
+        self.navigationBar.shadowImage = UIImage.init()
+    }
+    
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

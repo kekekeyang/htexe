@@ -22,8 +22,8 @@ class RootTabBarController: UITabBarController {
         firstNC.tabBarItem = firstItem
         
         let secNC = RootNCViewController.init(rootViewController: secendVC)
-        let secItem = UITabBarItem.init(title: "SEC", image: UIImage.init(named: "noResizeApi"), selectedImage: UIImage.init(named: "resizeApi"))
-        secendVC.title = "SEC"
+        let secItem = UITabBarItem.init(title: "计时器", image: UIImage.init(named: "tab-time"), selectedImage: UIImage.init(named: "tab-time-f"))
+        secendVC.title = "计时器"
         secNC.tabBarItem = secItem
         
         let thirdNC = RootNCViewController.init(rootViewController: thirdVC)
@@ -32,16 +32,23 @@ class RootTabBarController: UITabBarController {
         thirdNC.tabBarItem = thirdItem
         
         self.viewControllers = [ firstNC, secNC, thirdNC]
+        
         self.tabBar.tintColor = UIColor.red
+        
+        self.selectedIndex = 1
         
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initViewController()
+        
+        
+        
+        
         // Do any additional setup after loading the view.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
