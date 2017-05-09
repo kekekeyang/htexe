@@ -75,6 +75,7 @@ class SecViewController: RootViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setNavItem()
         self.setRound()
         self.view.addSubview(timer1)
         self.view.addSubview(timer2)
@@ -194,6 +195,17 @@ class SecViewController: RootViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    
+    func setNavItem() {
+        let rightBar = UIBarButtonItem.init(image: UIImage.init(named: "setting"), style: .plain, target: self, action: #selector(navigateSetting))
+        self.navigationItem.setRightBarButtonItems([rightBar], animated: true)
+    }
+    
+    func navigateSetting() {
+        let setting = SetViewController()
+        self.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(setting, animated: true)
+    }
     
     //        let fountA = UIFont.familyNames
     //        var itemy = 50

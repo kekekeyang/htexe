@@ -13,7 +13,7 @@ class RootNCViewController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        self.setLeftBar()
 
         // Do any additional setup after loading the view.
     }
@@ -22,8 +22,21 @@ class RootNCViewController: UINavigationController {
         self.navigationBar.setBackgroundImage(UIImage.init(), for: .any, barMetrics: .default)
         self.navigationBar.shadowImage = UIImage.init()
     }
+    func setLeftBar() {
+        if self.topViewController != nil {
+            let leftBar = UIBarButtonItem.init(image: UIImage.init(named: "left"), style: .plain, target: self, action: #selector(back))
+            self.navigationBar.backItem?.backBarButtonItem = leftBar
+        }
+    }
     
-    
+    func back() {
+        self.topViewController?.hidesBottomBarWhenPushed = false
+        self.popViewController(animated: true)
+    }
+    override func pushViewController(_ viewController: UIViewController, animated: Bool) {
+        super.pushViewController(viewController, animated: animated)
+        self.navigationController?.hidesBottomBarWhenPushed = true
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
