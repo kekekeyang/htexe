@@ -10,37 +10,72 @@ import UIKit
 
 class SecViewController: RootViewController {
     
-    let timer1: TimerView = TimerView.init(frame: CGRect.init(x: 0, y: 150, width: SCREEN_WIDTH, height: 70.0))
+    let timer1: TimerView = TimerView.init(frame: CGRect.init(x: 0, y: 200, width: SCREEN_WIDTH, height: 70.0))
+    let timer2: TimerView = TimerView.init(frame: CGRect.init(x: 0, y: 300, width: SCREEN_WIDTH, height: 70.0))
     
-    let fire: UIButton = UIButton.init(frame: CGRect.init(x: (SCREEN_WIDTH - 160)/3-20, y: 300, width: 80, height: 80))
+    let progress = UIProgressView.init(frame: CGRect.init(x: 10, y: 275, width: SCREEN_WIDTH - 20, height: 10))
     
-    var count: CGFloat = 0
+    let fire: UIButton = UIButton.init(frame: CGRect.init(x: (SCREEN_WIDTH - 160)/3, y: 420, width: 80, height: 80))
+    let reset: UIButton = UIButton.init(frame: CGRect.init(x: SCREEN_WIDTH - 80 - (SCREEN_WIDTH - 160)/3, y: 420, width: 80, height: 80))
+    
+    //运行总时间
+    var count: CGFloat = 300
     var secends: CGFloat = 0.0
     var minutes: CGFloat = 0.0
     var timer: Timer?
     var isFire: Bool = false
+    var isExer: Bool! = true
     
     
     func setFireButton()  {
-        self.view .addSubview(fire)
-        fire.setTitle("START", for: .normal)
-        fire.setTitleColor(HexColor.init("#789087"), for: .normal)
-        fire.setTitleColor(HexColor.init("#030303"), for: .selected)
+        self.view.addSubview(fire)
+        fire.setTitle("开始", for: .normal)
+        fire.setTitleColor(HexColor.init("#65ff21"), for: .normal)
         fire.addTarget(self, action: #selector(fireTheHole(_ :)), for: .touchUpInside)
         fire.layer.masksToBounds = true;
         fire.layer.borderWidth = 1;
         fire.layer.cornerRadius = 40;
+        fire.layer.borderColor = HexColor.init("#65ff21")?.cgColor
+    }
+    func setResetButton()  {
+        self.view.addSubview(reset)
+        reset.setTitle("复位", for: .normal)
+        reset.setTitleColor(HexColor.init("#1f1f1f"), for: .normal)
+        reset.addTarget(self, action: #selector(resetTimer(_ :)), for: .touchUpInside)
+        reset.layer.masksToBounds = true;
+        reset.layer.borderWidth = 1;
+        reset.layer.cornerRadius = 40;
+        reset.layer.borderColor = HexColor.init("#1f1f1f")?.cgColor
+    }
+    
+    func setProgressView() {
+        self.view.addSubview(progress)
+        progress.trackTintColor = HexColor.init("#169966")
+        progress.progressViewStyle = .bar
+        progress.backgroundColor = HexColor.init("#777777")
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addSubview(timer1)
+        self.view.addSubview(timer2)
+        
+        self.setProgressView()
         
         self.setFireButton()
-        
+        self.setResetButton()
 
     }
-    
+    //重置
+    func resetTimer(_ button: UIButton) {
+        self.timer?.invalidate()
+        self.timer = nil
+        self.count = 300
+        self.timer1.setStr("0:20.0")
+        self.timer2.setStr("0:10.0")
+        
+        self.progress.progress = 0.0
+    }
     //开始计时
     func fireTheHole(_ button: UIButton) {
 //        button.isSelected = !button.isSelected
@@ -48,42 +83,74 @@ class SecViewController: RootViewController {
             self.timer =  Timer.scheduledTimer(timeInterval: 0.1, target: self, selector:  #selector(counting), userInfo: nil, repeats: true)
         }
         
-        
         self.isFire = !self.isFire
         if self.isFire {
-            //start
-//            self.timer.fireDate = NSDate.distantFuture
+            fire.setTitle("暂停", for: .normal)
+            fire.setTitleColor(HexColor.init("#123456"), for: .normal)
+            fire.layer.borderColor = HexColor.init("#123456")?.cgColor
             self.timer?.fire()
         }else {
-            //stop
-            //            self.timer.fireDate = NSDate.distantPast
+            fire.setTitle("开始", for: .normal)
+            fire.setTitleColor(HexColor.init("#65ff21"), for: .normal)
+            fire.layer.borderColor = HexColor.init("#65ff21")?.cgColor
+            button.isHighlighted = false
             self.timer?.invalidate()
             self.timer = nil
         }
-            //stop forever
-//        self.timer.invalidate() 
     }
     
     func counting() {
-        self.count += 1
+        self.count -= 1
         
         self.secends = self.count/10
         
-        if(self.secends >= 60.0){
-            self.count = 0.0
-            self.secends = 0.0
-            self.minutes += 1
+        if(self.secends > 60.0){//暂时用不到
+            //self.count = 0.0
+            //self.secends = 0.0
+            //self.minutes += 1
+        }else if ( self.count > 100.0 ){
+            //self.count = 0.0
+            self.secends -= 10.0
+            self.isExer = true
+            let pro:CGFloat  = (20 - self.secends)/20
+            self.progress.setProgress(Float(pro) , animated: true)
+            self.progress.trackTintColor = UIColor.init(red: 33, green: pro*256, blue: 33, alpha: 0)
+        }else if ( self.count <= 100.0 && self.count > 0 ){
+            //self.count = 0.0
+            //self.secends = 0.0
+            self.isExer = false
+            let pro:CGFloat  = (self.secends)/20
+            self.progress.setProgress(Float(pro) , animated: true)
+            self.progress.trackTintColor = UIColor.init(red: 33, green: pro*256, blue: 33, alpha: 0)
+        }else if( self.count == 0.0){
+            self.count = 300
+            self.isExer = true
         }
         
-        if self.secends < 10.0 {
-            DispatchQueue.main.async {
-                self.timer1.secondLab.text = NSString.init(format: "%.lf:0%.1lf", self.minutes, self.secends) as String
+        let strBelow10: String =  NSString.init(format: "%.lf:0%.1lf", self.minutes, self.secends) as String
+        let strUp10: String =  NSString.init(format: "%.lf:%.1lf", self.minutes, self.secends) as String
+        //判断一下谁在运行
+        if  !self.isExer {
+            self.timer1.setStr("0:20.0")
+            if self.secends < 10.0 {
+                self.timer2.setStr( strBelow10)
+            }else {
+                self.timer2.setStr( strUp10)
             }
         }else {
-            DispatchQueue.main.async {
-            self.timer1.secondLab.text = NSString.init(format: "%.lf:%.1lf", self.minutes, self.secends) as String
+            self.timer2.setStr("0:10.0")
+            if self.secends < 10.0 {
+                //DispatchQueue.main.async {
+                //    self.timer1.secondLab.text = NSString.init(format: "%.lf:0%.1lf", self.minutes, self.secends) as String
+                // }
+                self.timer1.setStr(strBelow10)
+            }else if(self.secends >= 10.0 && self.secends <= 20.0){
+                self.timer1.setStr( strUp10)
             }
+
         }
+        
+        
 //        DispatchQueue.main.async {
 //            self.timer1.secondLab.text = countStr as String
 //        }

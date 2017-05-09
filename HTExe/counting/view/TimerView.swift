@@ -31,11 +31,10 @@ class TimerView: UIView {
 //        self.addSubview(minuteLab)
         self.addSubview(secondLab)
         
-//        secondLab.font = UIFont.init(name: fontName1, size: CGFloat(40))
-        let font = UIFont.init(name: "CourierNewPSMT", size: 70)
+        let font = UIFont.init(name: "CourierNewPSMT", size: 88)
         secondLab.font = font
         secondLab.textAlignment = .center
-        secondLab.text = "0:20.0"
+        secondLab.text = "0:00.0"
         secondLab.textColor = HexColor.init("#202020")
        
     }
