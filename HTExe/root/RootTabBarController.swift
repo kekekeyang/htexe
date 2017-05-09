@@ -33,7 +33,7 @@ class RootTabBarController: UITabBarController {
         
         self.viewControllers = [ firstNC, secNC, thirdNC]
         
-        self.tabBar.tintColor = UIColor.red
+        self.tabBar.tintColor = HexColor.init("#3033ff")
         
         self.selectedIndex = 1
         

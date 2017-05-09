@@ -10,6 +10,11 @@ import UIKit
 
 class SecViewController: RootViewController {
     
+    let player: HtVideoPlayer = HtVideoPlayer()
+    
+    let round: UILabel = UILabel.init(frame: CGRect.init(x: 0, y: 130, width: SCREEN_WIDTH, height: 50))
+    
+    
     let timer1: TimerView = TimerView.init(frame: CGRect.init(x: 0, y: 200, width: SCREEN_WIDTH, height: 70.0))
     let timer2: TimerView = TimerView.init(frame: CGRect.init(x: 0, y: 300, width: SCREEN_WIDTH, height: 70.0))
     
@@ -17,6 +22,8 @@ class SecViewController: RootViewController {
     
     let fire: UIButton = UIButton.init(frame: CGRect.init(x: (SCREEN_WIDTH - 160)/3, y: 420, width: 80, height: 80))
     let reset: UIButton = UIButton.init(frame: CGRect.init(x: SCREEN_WIDTH - 80 - (SCREEN_WIDTH - 160)/3, y: 420, width: 80, height: 80))
+    
+    
     
     //运行总时间
     var count: CGFloat = 300
@@ -26,6 +33,17 @@ class SecViewController: RootViewController {
     var isFire: Bool = false
     var isExer: Bool! = true
     
+    let total: Int = 8
+    var curre: Int = 0
+    
+    
+    func setRound() {
+        self.view.addSubview(round)
+        round.textColor = HexColor.init("#808080")
+        round.text = NSString.init(format: "回合 %d/%d", self.curre, self.total) as String
+        round.font = UIFont.init(name: "CourierNewPSMT", size: 46)
+        round.textAlignment = .center
+    }
     
     func setFireButton()  {
         self.view.addSubview(fire)
@@ -52,11 +70,12 @@ class SecViewController: RootViewController {
         self.view.addSubview(progress)
         progress.trackTintColor = HexColor.init("#169966")
         progress.progressViewStyle = .bar
-        progress.backgroundColor = HexColor.init("#777777")
+        progress.backgroundColor = HexColor.init("#ff9999")
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setRound()
         self.view.addSubview(timer1)
         self.view.addSubview(timer2)
         
@@ -70,11 +89,18 @@ class SecViewController: RootViewController {
     func resetTimer(_ button: UIButton) {
         self.timer?.invalidate()
         self.timer = nil
+        fire.setTitle("开始", for: .normal)
+        fire.setTitleColor(HexColor.init("#65ff21"), for: .normal)
+        fire.layer.borderColor = HexColor.init("#65ff21")?.cgColor
         self.count = 300
         self.timer1.setStr("0:20.0")
         self.timer2.setStr("0:10.0")
         
         self.progress.progress = 0.0
+        self.curre = 0
+        
+        player.stop()
+        
     }
     //开始计时
     func fireTheHole(_ button: UIButton) {
@@ -85,11 +111,13 @@ class SecViewController: RootViewController {
         
         self.isFire = !self.isFire
         if self.isFire {
+            player.play()
             fire.setTitle("暂停", for: .normal)
             fire.setTitleColor(HexColor.init("#123456"), for: .normal)
             fire.layer.borderColor = HexColor.init("#123456")?.cgColor
             self.timer?.fire()
         }else {
+            player.stop()
             fire.setTitle("开始", for: .normal)
             fire.setTitleColor(HexColor.init("#65ff21"), for: .normal)
             fire.layer.borderColor = HexColor.init("#65ff21")?.cgColor
@@ -114,17 +142,19 @@ class SecViewController: RootViewController {
             self.isExer = true
             let pro:CGFloat  = (20 - self.secends)/20
             self.progress.setProgress(Float(pro) , animated: true)
-            self.progress.trackTintColor = UIColor.init(red: 33, green: pro*256, blue: 33, alpha: 0)
+            self.progress.trackTintColor = UIColor.init(red: 33/255, green: pro, blue: 33/255, alpha: 0)
         }else if ( self.count <= 100.0 && self.count > 0 ){
             //self.count = 0.0
             //self.secends = 0.0
             self.isExer = false
-            let pro:CGFloat  = (self.secends)/20
+            let pro:CGFloat  = (self.secends)/10
             self.progress.setProgress(Float(pro) , animated: true)
-            self.progress.trackTintColor = UIColor.init(red: 33, green: pro*256, blue: 33, alpha: 0)
+            self.progress.trackTintColor = UIColor.init(red: 33/255, green: pro , blue: 33/255, alpha: 0)
         }else if( self.count == 0.0){
             self.count = 300
             self.isExer = true
+            self.curre += 1
+            round.text = NSString.init(format: "回合 %d/%d", self.curre, self.total) as String
         }
         
         let strBelow10: String =  NSString.init(format: "%.lf:0%.1lf", self.minutes, self.secends) as String

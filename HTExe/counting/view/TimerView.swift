@@ -35,7 +35,7 @@ class TimerView: UIView {
         secondLab.font = font
         secondLab.textAlignment = .center
         secondLab.text = "0:00.0"
-        secondLab.textColor = HexColor.init("#202020")
+        secondLab.textColor = HexColor.init("#666666")
        
     }
     
