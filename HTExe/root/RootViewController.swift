@@ -15,6 +15,16 @@ class RootViewController: UIViewController {
 
         // Do any additional setup after loading the view.
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if self.navigationController?.topViewController?.classForCoder == SecViewController.classForCoder() {
+            self.tabBarController?.tabBar.isHidden = true
+        }else {
+            self.tabBarController?.tabBar.isHidden = false
+        }
+        print(self.navigationController!.topViewController!.classForCoder)
+
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

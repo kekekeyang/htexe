@@ -86,6 +86,10 @@ class SecViewController: RootViewController {
         self.setResetButton()
 
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tabBarController?.tabBar.isHidden = false
+    }
     //重置
     func resetTimer(_ button: UIButton) {
         self.timer?.invalidate()
@@ -156,6 +160,9 @@ class SecViewController: RootViewController {
             self.isExer = true
             self.curre += 1
             round.text = NSString.init(format: "回合 %d/%d", self.curre, self.total) as String
+            if self.curre == self.total {
+                self.resetTimer(reset)
+            }
         }
         
         let strBelow10: String =  NSString.init(format: "%.lf:0%.1lf", self.minutes, self.secends) as String
@@ -205,6 +212,7 @@ class SecViewController: RootViewController {
         let setting = SetViewController()
         self.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(setting, animated: true)
+        self.hidesBottomBarWhenPushed = false
     }
     
     //        let fountA = UIFont.familyNames

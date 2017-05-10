@@ -30,12 +30,10 @@ class RootNCViewController: UINavigationController {
     }
     
     func back() {
-        self.topViewController?.hidesBottomBarWhenPushed = false
         self.popViewController(animated: true)
     }
     override func pushViewController(_ viewController: UIViewController, animated: Bool) {
         super.pushViewController(viewController, animated: animated)
-        self.navigationController?.hidesBottomBarWhenPushed = true
     }
 
     override func didReceiveMemoryWarning() {
