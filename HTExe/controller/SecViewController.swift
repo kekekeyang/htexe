@@ -10,7 +10,7 @@ import UIKit
 
 class SecViewController: RootViewController {
     
-    let player: HtVideoPlayer = HtVideoPlayer()
+    let htVidoePlayer: HtVideoPlayer = HtVideoPlayer()
     
     let round: UILabel = UILabel.init(frame: CGRect.init(x: 0, y: 130, width: SCREEN_WIDTH, height: 50))
     
@@ -22,6 +22,8 @@ class SecViewController: RootViewController {
     
     let fire: UIButton = UIButton.init(frame: CGRect.init(x: (SCREEN_WIDTH - 160)/3, y: 420, width: 80, height: 80))
     let reset: UIButton = UIButton.init(frame: CGRect.init(x: SCREEN_WIDTH - 80 - (SCREEN_WIDTH - 160)/3, y: 420, width: 80, height: 80))
+    
+    let music: UIButton = UIButton.init(frame: CGRect.init(x: 20, y: 50, width: 40, height: 40))
     
     
     
@@ -35,7 +37,13 @@ class SecViewController: RootViewController {
     
     let total: Int = 8
     var curre: Int = 0
+    var numMusic  = 0
     
+    func setMusic() {
+        self.view.addSubview(music)
+        music.setImage(UIImage.init(named: "music"), for: .normal)
+        music.addTarget(self, action: #selector(changeMusic), for: .touchUpInside)
+    }
     
     func setRound() {
         self.view.addSubview(round)
@@ -72,9 +80,11 @@ class SecViewController: RootViewController {
         progress.progressViewStyle = .bar
         progress.backgroundColor = HexColor.init("#ff9999")
     }
-
+//pragma mark life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        UserDefaults.standard.set("music000", forKey: "music")
+        self.setMusic()
         self.setNavItem()
         self.setRound()
         self.view.addSubview(timer1)
@@ -84,7 +94,6 @@ class SecViewController: RootViewController {
         
         self.setFireButton()
         self.setResetButton()
-
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -104,7 +113,7 @@ class SecViewController: RootViewController {
         self.progress.progress = 0.0
         self.curre = 0
         
-        player.stop()
+        htVidoePlayer.stop()
         
     }
     //开始计时
@@ -116,13 +125,13 @@ class SecViewController: RootViewController {
         
         self.isFire = !self.isFire
         if self.isFire {
-            player.play()
+            htVidoePlayer.play()
             fire.setTitle("暂停", for: .normal)
             fire.setTitleColor(HexColor.init("#123456"), for: .normal)
             fire.layer.borderColor = HexColor.init("#123456")?.cgColor
             self.timer?.fire()
         }else {
-            player.stop()
+            htVidoePlayer.stop()
             fire.setTitle("开始", for: .normal)
             fire.setTitleColor(HexColor.init("#65ff21"), for: .normal)
             fire.layer.borderColor = HexColor.init("#65ff21")?.cgColor
@@ -194,6 +203,23 @@ class SecViewController: RootViewController {
 //        }
         
         print(self.count, self.secends, self.minutes, NSString.init(format: "%.lf:%.1lf", self.minutes, self.secends))
+        
+    }
+    func changeMusic() {
+        let userDefault = UserDefaults.standard
+        numMusic += 1
+        let musicStr: String
+        if  numMusic < 10 {
+            musicStr = NSString.init(format: "music00%d", numMusic) as String
+        }else {
+            musicStr = NSString.init(format: "music0%d", numMusic) as String
+            if numMusic > 11 {
+                numMusic = 0
+            }
+        }
+        userDefault.set(musicStr, forKey: "music")
+        htVidoePlayer.stop()
+        htVidoePlayer.play()
         
     }
 

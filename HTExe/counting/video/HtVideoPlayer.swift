@@ -24,8 +24,10 @@ class HtVideoPlayer: NSObject {
         //背景音乐的播放需要现在info.plist进行社会 Required background。。。
         //self.backgroundMusic()
         //声明一个系统声音标志类型的声音变量
+        let source = UserDefaults.standard.string(forKey: "music")
+        
         var sounID: SystemSoundID = 0
-        let path = Bundle.main.path(forResource: "music001", ofType: "mp3")
+        let path = Bundle.main.path(forResource: source, ofType: "mp3")
         //路径找不到就会报内存的错误
         let soundUrl = URL(fileURLWithPath: path!)
         AudioServicesCreateSystemSoundID(soundUrl as CFURL, &sounID)
@@ -38,7 +40,8 @@ class HtVideoPlayer: NSObject {
         
     }
     func localMusic()  {
-        let path = Bundle.main.path(forResource: "music001", ofType: "mp3")
+        let source = UserDefaults.standard.string(forKey: "music")
+        let path = Bundle.main.path(forResource: source, ofType: "mp3")
         //        public init(fileURLWithPath path: String)
         let soundUrl = URL(fileURLWithPath: path!)
         
