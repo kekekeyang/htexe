@@ -23,8 +23,9 @@ class SecViewController: RootViewController {
     let fire: UIButton = UIButton.init(frame: CGRect.init(x: (SCREEN_WIDTH - 160)/3, y: 420, width: 80, height: 80))
     let reset: UIButton = UIButton.init(frame: CGRect.init(x: SCREEN_WIDTH - 80 - (SCREEN_WIDTH - 160)/3, y: 420, width: 80, height: 80))
     
-    let music: UIButton = UIButton.init(frame: CGRect.init(x: 20, y: 50, width: 40, height: 40))
+    let music: UIButton = UIButton.init(frame: CGRect.init(x: 20, y: 64, width: 40, height: 40))
     
+    let tCover: TCoverTab = TCoverTab.init(frame: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT))
     
     
     //运行总时间
@@ -206,20 +207,23 @@ class SecViewController: RootViewController {
         
     }
     func changeMusic() {
-        let userDefault = UserDefaults.standard
-        numMusic += 1
-        let musicStr: String
-        if  numMusic < 10 {
-            musicStr = NSString.init(format: "music00%d", numMusic) as String
-        }else {
-            musicStr = NSString.init(format: "music0%d", numMusic) as String
-            if numMusic > 11 {
-                numMusic = 0
-            }
-        }
-        userDefault.set(musicStr, forKey: "music")
-        htVidoePlayer.stop()
-        htVidoePlayer.play()
+        
+//        self.view.window?.addSubview(tCover)
+        tCover.show()
+//        let userDefault = UserDefaults.standard
+//        numMusic += 1
+//        let musicStr: String
+//        if  numMusic < 10 {
+//            musicStr = NSString.init(format: "music00%d", numMusic) as String
+//        }else {
+//            musicStr = NSString.init(format: "music0%d", numMusic) as String
+//            if numMusic > 11 {
+//                numMusic = 0
+//            }
+//        }
+//        userDefault.set(musicStr, forKey: "music")
+//        htVidoePlayer.stop()
+//        htVidoePlayer.play()
         
     }
 

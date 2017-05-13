@@ -29,6 +29,7 @@
 		0427A4681EC1EB7C00B515DA /* SetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0427A4671EC1EB7C00B515DA /* SetViewController.swift */; };
 		0427A46A1EC1ECA800B515DA /* left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0427A4691EC1ECA800B515DA /* left@2x.png */; };
 		0427A46C1EC4901B00B515DA /* music@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0427A46B1EC4901B00B515DA /* music@2x.png */; };
+		0427A46E1EC6EDDE00B515DA /* TCoverTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0427A46D1EC6EDDE00B515DA /* TCoverTab.swift */; };
 		042F363B1E88DC6A00C5D4B3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042F363A1E88DC6A00C5D4B3 /* AppDelegate.swift */; };
 		042F363D1E88DC6A00C5D4B3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042F363C1E88DC6A00C5D4B3 /* ViewController.swift */; };
 		042F36401E88DC6A00C5D4B3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 042F363E1E88DC6A00C5D4B3 /* Main.storyboard */; };
@@ -160,6 +161,7 @@
 		0427A4671EC1EB7C00B515DA /* SetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetViewController.swift; sourceTree = "<group>"; };
 		0427A4691EC1ECA800B515DA /* left@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left@2x.png"; sourceTree = "<group>"; };
 		0427A46B1EC4901B00B515DA /* music@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "music@2x.png"; sourceTree = "<group>"; };
+		0427A46D1EC6EDDE00B515DA /* TCoverTab.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCoverTab.swift; sourceTree = "<group>"; };
 		042F36371E88DC6A00C5D4B3 /* HTExe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HTExe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		042F363A1E88DC6A00C5D4B3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		042F363C1E88DC6A00C5D4B3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -255,6 +257,7 @@
 			isa = PBXGroup;
 			children = (
 				0427A4101EC0377A00B515DA /* TimerView.swift */,
+				0427A46D1EC6EDDE00B515DA /* TCoverTab.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -642,6 +645,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				042F36791E88DC8700C5D4B3 /* SecViewController.swift in Sources */,
+				0427A46E1EC6EDDE00B515DA /* TCoverTab.swift in Sources */,
 				042F36811E88DC8700C5D4B3 /* SimpleTool.swift in Sources */,
 				042F367E1E88DC8700C5D4B3 /* RootTabBarController.swift in Sources */,
 				042F36781E88DC8700C5D4B3 /* FirstViewController.swift in Sources */,
